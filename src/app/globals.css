@@ -1,0 +1,193 @@
+@import url("https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Dark editorial theme */
+    --background: 220 13% 7%;
+    --foreground: 210 20% 94%;
+
+    --card: 220 13% 10%;
+    --card-foreground: 210 20% 94%;
+
+    --surface-0: 220 13% 7%;
+    --surface-1: 220 13% 10%;
+    --surface-2: 220 13% 14%;
+
+    --muted: 220 10% 18%;
+    --muted-foreground: 215 15% 55%;
+
+    --accent: 152 60% 50%;
+    --accent-foreground: 152 60% 10%;
+
+    --primary: 152 60% 50%;
+    --primary-foreground: 152 60% 5%;
+
+    --border: 220 13% 16%;
+    --ring: 152 60% 50%;
+
+    --radius: 0.625rem;
+
+    /* Chart colors */
+    --chart-1: 152 60% 50%;
+    --chart-2: 217 91% 65%;
+    --chart-3: 270 60% 65%;
+    --chart-4: 38 90% 60%;
+    --chart-5: 0 72% 65%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: "DM Sans", system-ui, sans-serif;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Syne", sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--surface-1));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--border));
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground));
+  }
+}
+
+@layer components {
+  /* Metric card glow effect */
+  .metric-card {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .metric-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse at top left,
+      hsl(152 60% 50% / 0.06),
+      transparent 60%
+    );
+    pointer-events: none;
+  }
+
+  /* Shimmer loading skeleton */
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      hsl(var(--surface-2)) 25%,
+      hsl(var(--muted)) 50%,
+      hsl(var(--surface-2)) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+  }
+
+  /* Sidebar nav item */
+  .nav-item {
+    @apply relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-muted-foreground
+    transition-all duration-150 hover:text-foreground hover:bg-surface-2;
+  }
+
+  .nav-item.active {
+    @apply text-foreground bg-surface-2;
+  }
+
+  .nav-item.active::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 60%;
+    background: hsl(var(--accent));
+    border-radius: 0 2px 2px 0;
+  }
+
+  /* Green accent badge */
+  .badge-up {
+    @apply inline-flex items-center gap-1 text-xs font-medium px-1.5 py-0.5 rounded-md
+    bg-brand-500/10 text-brand-400;
+  }
+
+  .badge-down {
+    @apply inline-flex items-center gap-1 text-xs font-medium px-1.5 py-0.5 rounded-md
+    bg-red-500/10 text-red-400;
+  }
+
+  /* Glass card */
+  .glass-card {
+    @apply bg-surface-1 border border-border rounded-xl;
+  }
+
+  /* Noise texture overlay */
+  .noise-overlay {
+    position: relative;
+  }
+
+  .noise-overlay::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    pointer-events: none;
+    border-radius: inherit;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: "Syne", sans-serif;
+  }
+
+  .font-mono-data {
+    font-family: "DM Mono", monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .text-gradient-green {
+    background: linear-gradient(135deg, hsl(152 60% 55%), hsl(180 60% 50%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .animate-in {
+    opacity: 0;
+    animation: fade-in 0.4s ease forwards;
+  }
+}
